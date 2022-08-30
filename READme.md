@@ -2,7 +2,7 @@
 
 ## Карточная игра написана на чистом Javascript
 
-![alt tag](https://prnt.sc/Hbg9Xwak1rRR)
+![Начало игры](../master/files/Screenshot_2.png)
 
 ## Игрок должен выбрать уровень сложности
 
@@ -14,9 +14,9 @@
 
 1. Выбрать уровень сложности
 2. Перейти к полю с картами
-![alt tag](https://prnt.sc/cKyEZuvoKz4G)
+![Выбор карты](../master/files/Screenshot_3.png)
 3. Кликнуть по любой выбранной карте.
 4. После клика карта переворачивается. IЕсли ты нашел карту с багом - поздравляю, ты победил!
-![alt tag](https://prnt.sc/-2xjArrlBlRU)
+![Победа](../master/files/Screenshot_5.png)
 5. Если карты с багом нет - то игра закончена и ты можешь начать сначала
-![alt tag](https://prnt.sc/rmt_kji_K2XZ)
+![Конец игры](../master/files/Screenshot_4.png)
