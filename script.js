@@ -1,86 +1,84 @@
-const levelsItem = document.querySelectorAll('.level__item');
-const wrap = document.getElementById('wrapper');//переменная стартового поля//
-const startGame = document.getElementById('button');//переменная для кнопки//
+const levelsItem = document.querySelectorAll(".level__item");
+const wrap = document.getElementById("wrapper"); //переменная стартового поля//
+const btn = document.getElementById("button"); //переменная для кнопки//
 const gridContainer = document.body.children[1];
-let openCard = null;
+
 let click = 0;
-const levelMenu = document.querySelectorAll('level-menu');
 let cards = 0;
 
 //выбор уровня//
+btn.disabled = true;
 let onClick = function (event) {
-    event.preventDefault();
-    for (let i = 0; i < levelsItem.length; i++) {
-        levelsItem[i].classList.remove('level__item_selected');
-    }
-    event.currentTarget.classList.add('level__item_selected');
-    let selectLevel = document.querySelector('.level__item_selected');
-    switch (selectLevel.id) {
-        case "easy":
-            cards = 3;
-            break;
-        case "middle":
-            cards = 6;
-            break;
-        case "hard":
-            cards = 10;
-            break;
-    }
+  event.preventDefault();
+  for (let i = 0; i < levelsItem.length; i++) {
+    levelsItem[i].classList.remove("level__item_selected");
+  }
+  event.currentTarget.classList.add("level__item_selected");
+  btn.disabled = false;
 };
 
 //Скрыть меню:
 const invisible = function () {
-  wrap.classList.toggle('invisible');
-  wrap.classList.remove('wrapper');
-}
-
-random = (value) => (Math.floor(Math.random() * value));
-
-let rotateCards = function (event) {
-    event.preventDefault();
-    click++;
-    if(click < 2) {
-      event.currentTarget.children[0].classList.toggle("rotate");
-    }
-    else {
-      window.location.reload();
-    }
-    return;
+  wrap.classList.toggle("invisible");
+  wrap.classList.remove("wrapper");
 };
 
-let createWrapCards = function (event) {
-  const gameBoard = "<div class='grid__card-selected'><div class='grid__card-back'></div><div class='grid__card-over'></div></div>";
-  let randomValue = random(cards);
+function chooseLevel() {
+
+  let selectLevel = document.querySelector(".level__item_selected");
+  switch (selectLevel.id) {
+    case "easy":
+      createWrapCards(3, getRandom(3));
+      gridContainer.classList.toggle("grid-easy");
+      break;
+    case "middle":
+      createWrapCards(6, getRandom(6));
+      gridContainer.classList.toggle("grid-middle");
+      break;
+    case "hard":
+      createWrapCards(10, getRandom(10));
+      gridContainer.classList.toggle("grid-hard");
+      break;
+  }
+}
+
+function getRandom(value) {
+  return Math.floor(Math.random() * value);
+}
+
+function createWrapCards(cards, randomValue) {
+  const gameBoard =
+    "<div class='grid__card-selected'><div class='grid__card-back'></div><div class='grid__card-over'></div></div>";
+
   for (let i = 0; i < cards; i++) {
-    let newCards = document.createElement('div');
-    newCards.classList = 'grid__card';
+    let newCards = document.createElement("div");
+    newCards.classList = "grid__card";
     gridContainer.appendChild(newCards);
     newCards.innerHTML = gameBoard;
-    newCards.addEventListener("click", rotateCards);
-    let back = document.querySelectorAll('.grid__card-over');
-      if (i === randomValue) {
-          back[i].classList.toggle('grid__card-back-bug');
-          back[i].classList.remove('grid__card-over');
+
+    let back = document.querySelectorAll(".grid__card-over");
+
+    let rotateCards = () => {
+      click++;
+
+      if (click < 2) {
+        newCards.children[0].classList.toggle("rotate");
+
+        if (i === randomValue) {
+          back[i].classList.remove("grid__card-over");
+          back[i].classList.add("grid__card-back-bug");
+        }
+      } else {
+        window.location.reload();
       }
+      return;
+    };
+    newCards.addEventListener("click", rotateCards);
   }
-
-  openCard = document.querySelectorAll(".grid__card");
-
-  switch (cards) {
-    case 3:
-      gridContainer.classList.toggle('grid-easy');
-      break;
-    case 6:
-      gridContainer.classList.toggle('grid-middle');
-      break;
-    case 10:
-      gridContainer.classList.toggle('grid-hard');
-      break;
-  }
-};
+}
 
 for (let i = 0; i < levelsItem.length; i++) {
-  levelsItem[i].addEventListener('click', onClick, false);
+  levelsItem[i].addEventListener("click", onClick, false);
 }
-startGame.addEventListener("click", invisible);
-startGame.addEventListener("click", createWrapCards);
+btn.addEventListener("click", invisible);
+btn.addEventListener("click", chooseLevel);
