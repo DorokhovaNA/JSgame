@@ -1,6 +1,8 @@
 body {
   background: url(img/background.png) no-repeat;
   background-size: cover;
+  opacity: 0.9;
+  height: 100vh;
   margin: 0;
 }
 
@@ -65,22 +67,35 @@ body {
   padding: 1vw 3.6vh;
   text-decoration: none;
   border-radius: 7px;
+  border: 2px solid red;
   transition: opacity 0.5s;
   text-align: center;
 }
 
 .level__button:hover {
-  opacity: 0.5;
+  opacity: 0.9;
 }
 
-.cards__board {
+.card1 {
+  background: no-repeat url(img/card-back.png);
+  background-size: contain;
+  width: 218px;
+  height: 341px;
   position: absolute;
-  background-color: #fff;
-  background: url(img/carddown.png) no-repeat top 10px right, url(img/cardup.png) no-repeat;
-  width: 520px;
-  height: 450px;
-  top: 44%;
-  right: 21%;
+  left: 61.6%;
+  top: 51.8vh;
+  transform: rotate(12deg);
+}
+
+.card2 {
+  background: no-repeat url(img/card-back.png);
+  background-size: contain;
+  width: 218px;
+  height: 341px;
+  position: absolute;
+  left: 74.3%;
+  top: 53.5vh;
+  transform: rotate(39.2deg);
 }
 
 .invisible {
@@ -126,7 +141,7 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.8s;
+  transition: transform 0.5s;
   transform-style: preserve-3d;
 }
 
@@ -136,6 +151,7 @@ body {
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .grid__card-back {
@@ -151,6 +167,7 @@ body {
   width: 218px;
   height: 341px;
   background: url(img/card-bug.png);
+  background-size: cover;
   transform: rotateY(180deg);
 }
 
@@ -160,22 +177,15 @@ body {
 }
 
 .grid__card:hover {
-  filter: drop-shadow(10px 10px 15px rgba(0,0,0,0.5));
-  transform:   rotateZ(-3.08deg) translateY(-25px) ;
+  will-change: transform;
+  filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.5));
+  transform: translateY(-30px) rotateZ(-2deg);
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
 }
 
 
 @media (max-width:1400px) {
-  body {
-    background: url(img/background.png) no-repeat;
-    background-size: auto;
-    margin: 0;
-  }
-
-  .cards__board {
-    display: none;
-  }
-
   .grid-easy {
     grid-template-rows: 37vh;
     grid-template-columns: 16vw 16vw 16vw;
@@ -202,70 +212,33 @@ body {
     margin: 96px 145px 0 0;
   }
 
-  .grid__card {
+  .grid__card,
+  .grid__card-back-bug {
     background-color: transparent;
     width: 169px;
     height: 241px;
     cursor: pointer;
   }
 
-  .grid__card-selected {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-  }
-
+  .grid__card-back,
   .grid__card-over,
-  .grid__card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-  }
-
-  .grid__card-back {
-    background: url(img/card-back.png) no-repeat;
-    background-size: 80%;
-  }
-
-  .grid__card-over {
-    background: url(img/card-over.png) no-repeat;
-    background-size: 80%;
-  }
-
   .grid__card-back-bug {
-    width: 169px;
-    height: 241px;
-    background: url(img/card-bug.png) no-repeat;
     background-size: 80%;
-    background-position-x: 100%;
+    background-repeat: no-repeat;
   }
-
-  .grid__card:hover {
-    filter: drop-shadow(10px 10px 15px rgba(0,0,0,0.5));
-    transform:   rotateZ(-3.08deg) translateY(-25px) ;
-  }
-
+}
 
   @media (max-width:1100px) {
-    body {
-      background: url(img/background.png) no-repeat;
-      background-size: auto;
-      margin: 0;
-    }
-
     .title {
-      font: bold 49px/55px robotobold, sans-serif;
-      margin: 0;
-      padding: 117px 292px 4px 105px;
+      font: bold 44px/55px robotobold, sans-serif;
+      padding: 100px 20px 4px;
+      width: 100%;
     }
 
     .text {
-      margin: 0;
       font: bold 18px/21px robotoblack, sans-serif;
-      width: 651px;
+      padding: 30px 20px;
+      width: 100%;
     }
 
     .level__item {
@@ -273,11 +246,15 @@ body {
     }
 
     .level__item:last-child {
-    margin-bottom: 32px;
-    }
+      margin-bottom: 32px;
+     }
 
-    .cards__board {
-      display: none;
+    .level__button {
+      width: 250px;
+      height: 75px;
+      margin: 15px 120px 0;
+      font: bold 18px/28px robotoblack, sans-serif;
+      padding: 1vw 2.6vh;
     }
 
     .grid-easy {
@@ -289,7 +266,6 @@ body {
     }
 
     .grid-middle {
-      display: grid;
       grid-template-rows: 274px 274px;
       grid-template-columns: 206px 206px 206px;
       grid-gap: 2vw;
@@ -301,61 +277,69 @@ body {
       grid-template-rows: 245px 245px;
       grid-template-columns: 160px 160px 160px 160px 160px;
       grid-gap: 9px;
-      justify-content: center;
-      margin: 79px 31px 0 0;
+      justify-content: flex-start;
+      margin: 79px 30px 0;
     }
 
     .grid__card {
-      background-color: transparent;
       width: 120px;
       height: 150px;
-      cursor: pointer;
     }
 
-    .grid__card-selected {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
-    }
-
+    .grid__card-back,
     .grid__card-over,
-    .grid__card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-    }
-
-    .grid__card-back {
-      background: url(img/card-back.png) no-repeat;
+    .grid__card-back-bug {
       background-size: 80%;
-    }
-
-    .grid__card-over {
-      background: url(img/card-over.png) no-repeat;
-      background-size: 80%;
+      background-repeat: no-repeat;
     }
 
     .grid__card-back-bug {
       width: 120px;
       height: 150px;
-      background: url(img/card-bug.png) no-repeat;
-      background-size: 80%;
       background-position-x: 100%;
     }
-
-  @media (max-width:800px) {
-    body {
-      background: url(img/background.png) no-repeat;
-      background-size: auto;
-      margin: 0;
+    .card1,
+    .card2 {
+      display: none;
     }
+  }
+
+  @media (max-width:800px) and (min-width: 600px) {
     .title {
-      font: bold 44px/53px robotobold, sans-serif;
-      margin: 0;
-      padding: 117px 279px 34px 68px;
+      font: bold 34px/44px robotobold, sans-serif;
+      padding: 117px 38px 34px;
+      width: 100%;
+    }
+
+    .text {
+      width: 100%;
+      padding: 10px 20px;
+    }
+
+    .level__item {
+      font: bold 28px/32px robotobold, sans-serif;
+      padding: 27px 152px 0 153px;
+    }
+
+    .level__item_selected::before {
+      width: 10px;
+      height: 10px;
+      left: 129px;
+      top: 37px;
+    }
+
+    .level__item:last-child {
+      margin-bottom: 8px;
+    }
+
+    .level__button {
+      width: 227px;
+      height: 61px;
+      margin-top: 29px;
+      margin-right: 85px;
+      margin-left: 103px;
+      font: bold 18px/28px robotoblack, sans-serif;
+      padding: 1vw 2.6vh;
     }
 
     .grid-hard {
@@ -375,48 +359,41 @@ body {
       margin: 12vh 2vw 0 0;
     }
 
-  @media (max-width:600px) {
-    body {
-      background: url(img/background.png) no-repeat;
-      background-size: auto;
-      margin: 0;
+    .grid__card-back,
+    .grid__card-over,
+    .grid__card-back-bug {
+      background-size: 80%;
+      background-repeat: no-repeat;
     }
+  }
 
+  @media (max-width:600px) and (min-width: 320px) {
     .title {
       font: bold 28px/35px robotobold, sans-serif;
-      margin: 0;
-      padding: 64px 249px 14px 35px;
+      padding: 10px 38px;
     }
 
     .text {
-      margin: 0;
       font: bold 14px/18px robotoblack, sans-serif;
       width: 490px;
-      padding: 1px 272px 10px 38px;
+      padding: 10px 38px;
     }
 
     .grid__card {
-      background-color: transparent;
       width: 70px;
       height: 93px;
     }
 
     .level__item {
-      position: relative;
       font: bold 24px/28px robotobold, sans-serif;
-      margin: 0;
       padding: 27px 152px 0 153px;
     }
 
     .level__item_selected::before {
-      content: '';
       width: 10px;
       height: 10px;
-      background: #d62b2e;
-      position: absolute;
       left: 129px;
       top: 37px;
-      transform: rotate(45deg);
     }
 
     .level__item:last-child {
@@ -436,7 +413,6 @@ body {
     .grid__card-back-bug {
       width: 70px;
       height: 93px;
-      background: url(img/card-bug.png) no-repeat;
       background-size: 80%;
       background-position-x: 100%;
     }
@@ -456,5 +432,12 @@ body {
       grid-gap: 3vw;
       justify-content: center;
       margin: 12vh 2vw 0 0;
+    }
+
+    .grid__card-back,
+    .grid__card-over,
+    .grid__card-back-bug {
+      background-size: 80%;
+      background-repeat: no-repeat;
     }
 }
